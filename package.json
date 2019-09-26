@@ -1,0 +1,34 @@
+{
+  "name": "inject-git-repo",
+  "version": "0.0.1",
+  "description": "A tool that injects a repo to ./src/core folder or to another prespecified folder",
+  "main": "index.js",
+  "bin": {
+    "inject-git-repo": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emrexhepi/inject-git-repo.git"
+  },
+  "keywords": [
+    "git",
+    "repo",
+    "inject",
+    "core",
+    "reactjs",
+    "solution"
+  ],
+  "author": "Emrullah Rexhepi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emrexhepi/inject-git-repo/issues"
+  },
+  "homepage": "https://github.com/emrexhepi/inject-git-repo#readme",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "shelljs": "^0.8.3"
+  }
+}
