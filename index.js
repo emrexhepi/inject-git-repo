@@ -4,8 +4,20 @@
  * Library Imports
  */
 const fs = require('fs');
-const shell = require('shelljs');
 const dotenv = require('dotenv');
+const shell = require('shelljs');
+const run = require('./utils/commandRunner');
+
+/**
+ * Import Utils
+ */
+const {
+    addSubmodule,
+    setSubmoduleBranch,
+    updateSubmodules,
+    initUpdateSubmodules
+} = require('./utils/updateUtils');
+
 
 /**
  * Init Libraries
@@ -13,12 +25,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 /**
- * Desconstruct node .env
+ * CONSTANTS
  */
 const {
     INJECT_REPO,
     INJECT_REPO_BRANCH,
 } = process.env;
+SUBMODULE_PATH = 'src/core';
 
 /**
  * Helpers
@@ -31,17 +44,6 @@ const printBranchInfo = () => {
 const getExistingCoreBranchUrl = () => {
     const output = shell.exec('git --git-dir ./src/core/.git config --get remote.origin.url', { silent: true });
     return output.trim();
-};
-
-const cloneCoreRepo = () => {
-    const cloneCommand = `git clone ${INJECT_REPO} ./src/core/ --branch ${INJECT_REPO_BRANCH}`;
-    const cloneOutput = shell.exec(
-        cloneCommand
-    );
-    if (cloneOutput.code !== 0) {
-        shell.echo('Error: Git commit failed');
-        shell.exit(1);
-    }
 };
 
 const checkRepoMatch = () => {
@@ -63,7 +65,7 @@ const pullFromCoreRepo = () => {
     const pullCommand = `git --git-dir ./src/core/.git pull origin ${INJECT_REPO_BRANCH}`;
     const pullOutput = shell.exec(pullCommand);
     if (pullOutput.code !== 0) {
-        shell.echo('Error: Git pull failed');
+        shell.echo('Error: git pull failed');
         shell.exit(1);
     }
 };
@@ -103,8 +105,21 @@ if (!CORE_FOLDER_EXISTS) {
     console.info('Cloning core repo!');
     printBranchInfo();
 
-    // clone repo
-    cloneCoreRepo();
+    // add submodule
+    addSubmodule(
+        INJECT_REPO, SUBMODULE_PATH, SUBMODULE_PATH
+    );
+
+    setSubmoduleBranch(
+        INJECT_REPO_BRANCH,
+        SUBMODULE_PATH
+    );
+
+    // init submodule update
+    initUpdateSubmodules();
+
+    // update submodules
+    updateSubmodules();
 }
 
 /**
@@ -123,5 +138,11 @@ if (CORE_FOLDER_EXISTS) {
     console.info('Updating core repo!');
     printBranchInfo();
 
-    pullFromCoreRepo();
+    // set branch
+    setSubmoduleBranch(
+        INJECT_REPO_BRANCH,
+        SUBMODULE_PATH
+    );
+
+    updateSubmodules();
 }
