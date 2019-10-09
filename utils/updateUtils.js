@@ -20,7 +20,7 @@ const addSubmodule = (INJECT_REPO, SUBMODULE_PATH, SUBMODULE_NAME) => {
  * @param {name} SUBMODULE_PATH 
  */
 const setSubmoduleBranch = (REPO_BRANCH, SUBMODULE_NAME) => {
-    const command = `git submodule set-branch --branch ${REPO_BRANCH} ${SUBMODULE_NAME}`;
+    const command = `git --git-dir=src/core/.git checkout ${REPO_BRANCH}`;
 
     run(command);
 };
