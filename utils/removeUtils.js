@@ -1,6 +1,11 @@
 // import modules
-import run from './commandRunner';
+const run = require('./commandRunner');
 
-const deinitSubmodule = (submodulePath) => {
+const removeSubmodule = (submodulePath) => {
+    const command = `git rm -rf ${submodulePath} -f`;
+    run(command, '', false);
+}
 
+module.exports={
+    removeSubmodule
 }

@@ -7,20 +7,9 @@ const run = require('./commandRunner');
  * @param {path} SUBMODULE_PATH Path where submodule should be located
  * @param {name} SUBMODULE_NAME Name of submodule
  */
-const addSubmodule = (INJECT_REPO, SUBMODULE_PATH, SUBMODULE_NAME) => {
+const addSubmodule = (INJECT_REPO, INJECT_BRANCH,  SUBMODULE_PATH, SUBMODULE_NAME) => {
     // first add submodule to project
-    const command = `git submodule add -f --name ${SUBMODULE_NAME} ${INJECT_REPO} ${SUBMODULE_PATH}`;
-    
-    run(command);
-};
-
-/**
- * 
- * @param {branch} REPO_BRANCH 
- * @param {name} SUBMODULE_PATH 
- */
-const setSubmoduleBranch = (REPO_BRANCH, SUBMODULE_NAME) => {
-    const command = `git --git-dir=src/core/.git checkout ${REPO_BRANCH}`;
+    const command = `git submodule add -f --name ${SUBMODULE_NAME} --branch ${INJECT_BRANCH} ${INJECT_REPO} ${SUBMODULE_PATH}`;
 
     run(command);
 };
@@ -40,7 +29,6 @@ const updateSubmodules = () => {
 
 module.exports = {
     addSubmodule,
-    setSubmoduleBranch,
     initUpdateSubmodules,
     updateSubmodules
 };
