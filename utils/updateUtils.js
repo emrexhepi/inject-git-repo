@@ -9,7 +9,7 @@ const run = require('./commandRunner');
  */
 const addSubmodule = (INJECT_REPO, INJECT_BRANCH,  SUBMODULE_PATH, SUBMODULE_NAME) => {
     // first add submodule to project
-    const command = `git submodule add -f --name ${SUBMODULE_NAME} --branch ${INJECT_BRANCH} ${INJECT_REPO} ${SUBMODULE_PATH}`;
+    const command = `git submodule add -f --branch ${INJECT_BRANCH} ${INJECT_REPO} ${SUBMODULE_PATH}`;
 
     run(command);
 };

@@ -127,7 +127,6 @@ async function init() {
      * Check Branches
      *  - Check if existing branch is the same as .env branch
      */
-    console.log('before repo!');
     if (CORE_FOLDER_EXISTS && !checkRepoMatch()) {
         try{
             const answer = INJECT_REPO_BRANCH_OVERWRITE || await askUser('Do you want to overwrite repo ? (y/n): ');
